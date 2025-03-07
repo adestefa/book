@@ -117,13 +117,13 @@ body {
 
 <div class='d-flex align-items-center gap-2'>
 <div class='font-size-16'>or</div>
-<a class="btn btn-outline-white " href="/books.html">Learn More</a>
+<a class="btn btn-outline-white " href="/book.html">Learn More</a>
 </div>
 </div>
 
 </div>
 </div>
-<a title="Minds in the Machine" class="cover-image-link" href="/books.html"><img class="img-fluid cover-image" src="book.webp" />
+<a title="Minds in the Machine" class="cover-image-link" href="/book.html"><img class="img-fluid cover-image" src="book.webp" />
 </a></div>
 </div>
 </div>
@@ -253,7 +253,7 @@ Did you mean
 <!-- -->
 
 <!-- response form -->
-<div id="m_response_form" class="mt-4">
+<div id="m_response_form" style="display:none" class="mt-4">
     <turbo-frame data-turbo="true" id="contact_turbo_frame" src="https://mindsinthemachine.com/contact_form_submissions" complete=""><div class="form-submitted d-flex align-items-center">
     <svg width="50px" height="50px" style="fill: none; stroke: currentColor; vertical-align: middle; " viewBox="0 0 62 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0_615_62865)">
@@ -344,6 +344,13 @@ Copyright
 <script>
    M = {
     contact_submit: function() {
+
+        const submit_to_url_linode = "https://your-linode-server.com/contact";
+        const submit_to_url_test   = "/process";
+
+        // where does the form data go to?
+        const submit_url = submit_to_url_test;
+
         // Capture data 
         const msg = {
             email: jQuery("#contact_form_submission_email").val(),
@@ -352,10 +359,11 @@ Copyright
         };
         
         console.dir(msg); // Debugging output
+        console.log(msg);
         
         // Send data via AJAX to your Linode server
         jQuery.ajax({
-            url: "https://your-linode-server.com/contact", // Replace with your actual endpoint
+            url: submt_url, // Replace with your actual endpoint
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(msg),
