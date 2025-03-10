@@ -348,10 +348,11 @@ Copyright
 
 <script>
    M = {
+    
     contact_submit: function() {
 
         const submit_to_url_linode = "https://your-linode-server.com/contact";
-        const submit_to_url_test   = "/process";
+        const submit_to_url_test   = "http://backend.local:5000/save-contact";
 
         // where does the form data go to?
         const submit_url = submit_to_url_test;
@@ -368,12 +369,12 @@ Copyright
         
         // Send data via AJAX to your Linode server
         jQuery.ajax({
-            url: submt_url, // Replace with your actual endpoint
+            url: submit_url, // Replace with your actual endpoint
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(msg),
             success: function(response) {
-                console.log("Message sent successfully", response);
+                console.log("Message sent to " + submit_url + " successfully", response);
                 jQuery("#m_contact_form").hide();
                 jQuery("#m_response_form").fadeIn("slow");
             },
