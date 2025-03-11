@@ -1,0 +1,53 @@
+<!-- NEED JQUERY -->
+
+<!-- VENDING MACHINE -->
+<div id="test"></div>
+<script>
+    VEND = {
+    ver : "v0.1",
+    test : function () {
+    var e = document.getElementById("test");
+    e.innerHTML="Testing";
+    var email = "mytest@satori.com"
+    var config = "1,3,8,9"
+    this.send_config(email, config);
+    },
+
+    // submit contact request 
+    send_config: function(_email, _config) {
+
+        const submit_to_url_linode = "https://your-linode-server.com/save_config";
+        const submit_to_url_test   = "http://backend:5000/save_contact";
+
+        // where does the form data go to?
+        const submit_url = submit_to_url_test;
+
+        // Capture data 
+        const msg = {
+            email: _email,
+            msg: _config,
+            ts: new Date().toISOString() // Convert to ISO string format for compatibility
+        };
+        
+        console.dir(msg); // Debugging output
+        console.log(msg);
+        
+        // Send data via AJAX to your Linode server
+        jQuery.ajax({
+            url: submit_url, // Replace with your actual endpoint
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(msg),
+            success: function(response) {
+                console.log("Message sent to " + submit_url + " successfully", response);
+                jQuery("#m_contact_form").hide();
+                jQuery("#m_response_form").fadeIn("slow");
+            },
+            error: function(xhr, status, error) {
+                console.error("Error sending message:", status, error);
+                alert("Failed to send message. Please try again.");
+            }
+        });
+    }
+}
+</script>
