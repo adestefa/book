@@ -344,12 +344,12 @@ Copyright
 <script>
    M = {
 
-    ver : "v0.7",
+    ver : "v1.0",
     
     // submit contact request 
     contact_submit: function() {
 
-        const submit_to_url_linode = "https://your-linode-server.com/contact";
+        const submit_to_url_linode = "http://172.104.210.69:8000/save_contact";
         const submit_to_url_test   = "http://backend:5000/save_contact";
 
         // where does the form data go to?
@@ -386,7 +386,7 @@ Copyright
     // submit subscribe request
     subscribe_submit : function () {
         
-        const submit_to_url_linode = "https://your-linode-server.com/contact";
+        const submit_to_url_linode = "http://172.104.210.69:8000/save_subscription";
         const submit_to_url_test   = "http://backend:5000/save_subscription";
 
         // where does the form data go to?
@@ -460,7 +460,7 @@ Copyright
     // submit hit request
     send_hit : function (payload) {
         
-        const submit_to_url_linode = "https://your-linode-server.com/contact";
+        const submit_to_url_linode = "http://172.104.210.69:8000/save_hit";
         const submit_to_url_test   = "http://backend:5000/save_hit";
 
         // where does the form data go to?
