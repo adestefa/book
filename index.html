@@ -196,30 +196,41 @@ At the heart of <em>Minds in the Machine</em> lies an AI experiment unlike any b
 </defs>
 </svg>
 </div>
-<div class='newsletter-form text-center'>
+
+
+<!-- SUBSCRIPTION FORM-->
+<div class='newsletter-form text-center' id="subscription_form">
 <turbo-frame data-turbo="true" id="newsletter_turbo_frame"><div class='newsletter-header font-size-38 logo-font'>Join my mailing list</div>
 <div class='mb-3 body-font newsletter-subheader font-size-18'>Be the first to hear about new events and exclusive content.</div>
-<form class="track-newsletter-form" id="new_newsletter_subscription" action="/newsletter_subscriptions" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="HDECbWhPdUBFBgOEYEz2W8nA1khHQ5Ui8MqbRaJGWmEkJv02C3_ZdEhdy5OvIc_5TaNVepH0CC8284uN0w1soA" autocomplete="off" /><input type="hidden" name="newsletter_module_id" id="newsletter_module_id" value="6957" autocomplete="off" />
+<form class="track-newsletter-form" id="new_newsletter_subscription" action="/" accept-charset="UTF-8" method="post">
 <input type="hidden" name="landing_page" id="landing_page" value="false" autocomplete="off" />
 <input type="hidden" name="recaptcha_token" id="recaptcha_token" value="" autocomplete="off" />
 <input value="Home Page" autocomplete="off" type="hidden" name="newsletter_subscription[source]" id="newsletter_subscription_source" />
 <div class='form-group d-flex flex-column gap-3 px-2 py-2 rounded-1 bg-text-transparent-10 px-md-4 py-md-3'>
-<div class='text-start'>
+
+
+<div class='text-start' id="sub_email_form">
 <label class="form-label fw-bold" for="newsletter_subscription_email">Email Address</label>
 <div class='d-flex flex-column flex-lg-row gap-2'>
 <div class='flex-grow-1'>
 <input placeholder="example@example.com" required="required" aria-label="Email Address" class="form-control " type="email" name="newsletter_subscription[email]" id="newsletter_subscription_email" />
-<div class='email-hint mt-2 d-none'>
-Did you mean
-<button class='suggested-email bg-transparent border-0 p-0 text-reset text-decoration-underline fw-bold' type='button'></button>?
+</div>
+<input type="button" value="Subscribe" onclick="M.subscribe_submit()" class="btn btn-primary recaptcha-submit newsletter-btn" aria-label="Subscribe" data-disable-with="Submitting email..." />
 </div>
 </div>
-<input type="submit" value="Subscribe" class="btn btn-primary recaptcha-submit newsletter-btn" aria-label="Subscribe" data-disable-with="Submitting email..." />
+
+<!-- Subscription response -->
+<div class='text-start' id="sub_email_response" style="display:none">
+    <label class="form-label fw-bold" for="newsletter_subscription_email">Thank you! You are now subscribed.</label>
 </div>
-</div>
+
+
 </div>
 </form></turbo-frame>
 </div>
+
+
+
 </div>
 
 </div>
@@ -348,11 +359,14 @@ Copyright
 
 <script>
    M = {
+
+    ver : "v0.3",
     
+    // submit contact request 
     contact_submit: function() {
 
         const submit_to_url_linode = "https://your-linode-server.com/contact";
-        const submit_to_url_test   = "http://backend.local:5000/save-contact";
+        const submit_to_url_test   = "http://backend:5000/save_contact";
 
         // where does the form data go to?
         const submit_url = submit_to_url_test;
@@ -377,6 +391,42 @@ Copyright
                 console.log("Message sent to " + submit_url + " successfully", response);
                 jQuery("#m_contact_form").hide();
                 jQuery("#m_response_form").fadeIn("slow");
+            },
+            error: function(xhr, status, error) {
+                console.error("Error sending message:", status, error);
+                alert("Failed to send message. Please try again.");
+            }
+        });
+    }, 
+
+    // submit subscribe request
+    subscribe_submit : function () {
+        
+        const submit_to_url_linode = "https://your-linode-server.com/contact";
+        const submit_to_url_test   = "http://backend:5000/save_subscription";
+
+        // where does the form data go to?
+        const submit_url = submit_to_url_test;
+
+        // Capture data 
+        const msg = {
+            email: jQuery("#newsletter_subscription_email").val(),
+            ts: new Date().toISOString() // Convert to ISO string format for compatibility
+        };
+        
+        console.dir(msg); // Debugging output
+        console.log(msg);
+        
+        // Send data via AJAX to your Linode server
+        jQuery.ajax({
+            url: submit_url, // Replace with your actual endpoint
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(msg),
+            success: function(response) {
+                console.log("Message sent to " + submit_url + " successfully", response);
+                jQuery("#sub_email_form").hide();
+                jQuery("#sub_email_response").fadeIn("slow");
             },
             error: function(xhr, status, error) {
                 console.error("Error sending message:", status, error);
