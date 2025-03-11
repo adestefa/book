@@ -410,31 +410,41 @@ Copyright
         });
     },
 
+    check_param : function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('tracking') === '1';
+    },
 
     tracking : function () {
         var out = {}
         console.log("MIM Tracking " + M.ver);
 
-        fetch('https://ipinfo.io/json')
-        .then(response => response.json())
-        .then(data => {
-           // console.log('Your IP:', data.ip);
-           // console.log('Location:', data.city, data.region, data.country);
-           // console.log('ISP:', data.org);
-            out = {
-                "ip" : data.ip,
-                "hostname": data.hostname,
-                "country" : data.country,
-                "region"  : data.region,
-                "city"    : data.city,
-                "postal"  : data.postal,
-                "isp"     : data.org
-            }
-           // console.dir(out);
-           // console.log("sending hit");
-            this.send_hit(out);
-            
-        }).catch(error => console.error('Error:', error));
+        if (M.check_param("tracking")) {
+            console.log("Tracking enabled");
+            fetch('https://ipinfo.io/json')
+            .then(response => response.json())
+            .then(data => {
+            // console.log('Your IP:', data.ip);
+            // console.log('Location:', data.city, data.region, data.country);
+            // console.log('ISP:', data.org);
+                out = {
+                    "ip" : data.ip,
+                    "hostname": data.hostname,
+                    "country" : data.country,
+                    "region"  : data.region,
+                    "city"    : data.city,
+                    "postal"  : data.postal,
+                    "isp"     : data.org
+                }
+            // console.dir(out);
+            // console.log("sending hit");
+                this.send_hit(out);
+                
+            }).catch(error => console.error('Error:', error));
+
+        } else {
+            console.log("Tracking off");
+        }
              
     },
 
