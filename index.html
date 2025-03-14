@@ -149,19 +149,12 @@ At the heart of <em>Minds in the Machine</em> lies an AI experiment unlike any b
 </div>
 
 <div class='website-section mb-7 mb-xl-9 container'></div>
-
 <div class='website-section mb-7 mb-xl-9 container'></div>
-
 <div class='website-section mb-7 mb-xl-9 container'></div>
-
 <div class='website-section mb-7 mb-xl-9 container'></div>
-
 <div class='website-section mb-7 mb-xl-9 container'></div>
-
 <div class='website-section mb-7 mb-xl-9 container'></div>
-
 <div class='website-section mb-7 mb-xl-9 container'></div>
-
 <div class='website-section mb-7 mb-xl-9 '><div class='container'>
 <div class='newsletter-module mailbox' id='newsletter-module'>
 <div class='d-flex flex-column align-items-center justify-content-center'>
@@ -185,33 +178,30 @@ At the heart of <em>Minds in the Machine</em> lies an AI experiment unlike any b
 
 <!-- SUBSCRIPTION FORM-->
 <div class='newsletter-form text-center' id="subscription_form">
+    <form class="new_contact_form_submission" id="new_contact_form_submission" onsubmit="return false" action="/" accept-charset="UTF-8" method="post">
+        <input type="hidden" name="authenticity_token" value="wwwrvE9xkSqs-aAcXno8JJ0FT-XZdlsr9nyHiPXyXkn1GdxLJk-cyUszpesFENzx1cqZy8v16i1-am5l9sB4wQ" autocomplete="off" />
+        <input type="hidden" name="recaptcha_token" id="recaptcha_token" value="" autocomplete="off" />
 <turbo-frame data-turbo="true" id="newsletter_turbo_frame"><div class='newsletter-header font-size-38 logo-font'>Join my mailing list</div>
 <div class='mb-3 body-font newsletter-subheader font-size-18'>Be the first to hear about new events and exclusive content.</div>
-<form class="track-newsletter-form" id="new_newsletter_subscription" action="/" accept-charset="UTF-8" method="post">
-<input type="hidden" name="landing_page" id="landing_page" value="false" autocomplete="off" />
-<input type="hidden" name="recaptcha_token" id="recaptcha_token" value="" autocomplete="off" />
-<input value="Home Page" autocomplete="off" type="hidden" name="newsletter_subscription[source]" id="newsletter_subscription_source" />
 <div class='form-group d-flex flex-column gap-3 px-2 py-2 rounded-1 bg-text-transparent-10 px-md-4 py-md-3'>
-
-
 <div class='text-start' id="sub_email_form">
-<label class="form-label fw-bold" for="newsletter_subscription_email">Email Address</label>
+<label class="form-label fw-bold" for="newsletter_subscription_email">Email Address <span id="subscribe_err" style="color:red;display:none">&nbsp;&nbsp;Please provide an email address to continue.</span></label>
 <div class='d-flex flex-column flex-lg-row gap-2'>
-<div class='flex-grow-1'>
-<input placeholder="example@example.com" required="required" aria-label="Email Address" class="form-control " type="email" name="newsletter_subscription[email]" id="newsletter_subscription_email" />
+<div class='flex-grow-1'><form>
+<input placeholder="example@example.com" required="required" aria-label="Email Address" class="form-control " type="text" name="newsletter_subscription[email]" id="newsletter_subscription_email" />
 </div>
-<input type="button" value="Subscribe" onclick="M.subscribe_submit()" class="btn btn-primary recaptcha-submit newsletter-btn" aria-label="Subscribe" data-disable-with="Submitting email..." />
+<input type="submit" value="Subscribe" onclick="M.subscribe_submit()" class="btn btn-primary newsletter-btn" aria-label="Subscribe" />
 </div>
 </div>
-
+</form>
 <!-- Subscription response -->
 <div class='text-start' id="sub_email_response" style="display:none">
-    <label class="form-label fw-bold" for="newsletter_subscription_email">Thank you! You are now subscribed.</label>
+    <label class="form-label fw-bold" for="newsletter_subscription_email" id="subscribe_success_msg">Thank you! You are now subscribed.</label>
 </div>
 
 
 </div>
-</form></turbo-frame>
+</turbo-frame>
 </div>
 
 
@@ -249,6 +239,7 @@ At the heart of <em>Minds in the Machine</em> lies an AI experiment unlike any b
 </textarea>
 </div>
 <input onclick="M.contact_submit()" type="button" name="nil" value="Send Message" class="btn recaptcha-submit" data-disable-with="Sending..." />
+&nbsp;&nbsp;<span id="contact_err" style="color:red;display:none">Please provide an email and message to continue.</span>
 </form></turbo-frame>
 </div>
 <!-- -->
@@ -344,21 +335,55 @@ Copyright
 <script>
    M = {
 
-    ver : "v1.0",
+    ver : "v1.1",
+    
+    PROD_HOST_IP : "http://172.104.210.69:8000/",
+    
+    PROD_HOST    : "http://mindsinthemachinebook.com/",
+    
+    TEST_HOST    : "http://backend:5000/",
+
+    // WHERE ARE WE SENDING?
+    SUBMIT_URL   : "",
+
+    // REG FINAL URLS FOR TESTING
+    SUBMIT_URL_CONTACT      : "",
+    SUBMIT_URL_SUBSCRIBE    : "",
+    SUBMIT_URL_HIT          : "",
+
+
+
+    init_: function() {
+        console.log("MIM Form Processing " + M.ver);
+        this.SUBMIT_URL = this.TEST_HOST;
+        this.SUBMIT_URL_CONTACT     = this.SUBMIT_URL + "save_contact";
+        this. SUBMIT_URL_SUBSCRIBE  = this.SUBMIT_URL + "save_subscription";
+        this.SUBMIT_URL_HIT         = this.SUBMIT_URL + "save_hit";
+
+        this.show_urls();
+    },
+
+    t : function () {
+        console.log("t");
+    },
     
     // submit contact request 
     contact_submit: function() {
 
-        const submit_to_url_linode = "http://172.104.210.69:8000/save_contact";
-        const submit_to_url_test   = "http://backend:5000/save_contact";
+        const usr_email = jQuery("#contact_form_submission_email").val();
+        const usr_msg   = jQuery("#contact_form_submission_message").val();
 
-        // where does the form data go to?
-        const submit_url = submit_to_url_test;
+        if ((usr_email == "") || (usr_msg == "")) {
+            jQuery("#contact_err").show();
+            return;
+        } else {
+            jQuery("#contact_err").hide();
+        }
 
         // Capture data 
         const msg = {
-            email: jQuery("#contact_form_submission_email").val(),
-            msg: jQuery("#contact_form_submission_message").val(),
+            email: usr_email,
+            msg: usr_msg,
             ts: new Date().toISOString() // Convert to ISO string format for compatibility
         };
         
@@ -367,12 +392,12 @@ Copyright
         
         // Send data via AJAX to your Linode server
         jQuery.ajax({
-            url: submit_url, // Replace with your actual endpoint
+            url: M.SUBMIT_URL_CONTACT, // Replace with your actual endpoint
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(msg),
             success: function(response) {
-                console.log("Message sent to " + submit_url + " successfully", response);
+                console.log("Message sent to " + this.SUBMIT_URL_CONTACT + " successfully", response);
                 jQuery("#m_contact_form").hide();
                 jQuery("#m_response_form").fadeIn("slow");
             },
@@ -386,11 +411,22 @@ Copyright
     // submit subscribe request
     subscribe_submit : function () {
         
-        const submit_to_url_linode = "http://172.104.210.69:8000/save_subscription";
-        const submit_to_url_test   = "http://backend:5000/save_subscription";
+        //const submit_to_url_linode = "http://172.104.210.69:8000/save_subscription";
+        //const submit_to_url_test   = "http://backend:5000/save_subscription";
 
         // where does the form data go to?
-        const submit_url = submit_to_url_test;
+        //const submit_url = submit_to_url_test;
+
+        const endpoint = "save_subscription";
+
+        const usr_email = jQuery("#newsletter_subscription_email").val();
+
+        if (usr_email == "") {
+            jQuery('#subscribe_err').show();
+            return;
+        } else {
+            jQuery('#subscribe_err').hide();
+        }
 
         // Capture data 
         const msg = {
@@ -403,14 +439,15 @@ Copyright
         
         // Send data via AJAX to your Linode server
         jQuery.ajax({
-            url: submit_url, // Replace with your actual endpoint
+            url: M.SUBMIT_URL_SUBSCRIBE, // Replace with your actual endpoint
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(msg),
             success: function(response) {
-                console.log("Message sent to " + submit_url + " successfully", response);
+                console.log("Message sent to " + this.SUBMIT_URL_SUBSCRIBE + " successfully", response);
                 jQuery("#sub_email_form").hide();
                 jQuery("#sub_email_response").fadeIn("slow");
+                jQuery("#subscribe_success_msg").text("Thank you! '" + msg.email + "'' is now subscribed.");
             },
             error: function(xhr, status, error) {
                 console.error("Error sending message:", status, error);
@@ -424,12 +461,52 @@ Copyright
         return urlParams.get('tracking') === '1';
     },
 
+
+    // submit hit request
+    send_hit : function (payload) {
+        
+        //const submit_to_url_linode = "http://172.104.210.69:8000/save_hit";
+        //const submit_to_url_test   = "http://backend:5000/save_hit";
+
+        // where does the form data go to?
+       // const submit_url = submit_to_url_test;
+
+        const endpoint = "save_hit";
+
+        // Capture data 
+        const msg = {
+            hit: payload,
+            ts: new Date().toISOString() // Convert to ISO string format for compatibility
+        };
+        
+       // console.dir(msg); // Debugging output
+       // console.log(msg);
+        
+        // Send data via AJAX to your Linode server
+        jQuery.ajax({
+            url: M.SUBMIT_URL_HIT, // Replace with your actual endpoint
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(msg),
+            success: function(response) {
+                console.log("Message sent to " + this.SUBMIT_URL_HIT + " successfully", response);
+                
+            },
+            error: function(xhr, status, error) {
+                console.error("Error sending message:", status, error);
+                alert("Failed to send message. Please try again.");
+            }
+        });
+    },
+
+
     tracking : function () {
         var out = {}
-        console.log("MIM Tracking " + M.ver);
+        console.log("MIM Tracking..");
 
+        // only fires if '&tracking=1' is in the url
         if (M.check_param("tracking")) {
-            console.log("Tracking enabled");
+            console.log("->Tracking enabled");
             fetch('https://ipinfo.io/json')
             .then(response => response.json())
             .then(data => {
@@ -452,48 +529,25 @@ Copyright
             }).catch(error => console.error('Error:', error));
 
         } else {
-            console.log("Tracking off");
+            console.log("->Tracking off");
         }
              
     },
 
-    // submit hit request
-    send_hit : function (payload) {
-        
-        const submit_to_url_linode = "http://172.104.210.69:8000/save_hit";
-        const submit_to_url_test   = "http://backend:5000/save_hit";
 
-        // where does the form data go to?
-        const submit_url = submit_to_url_test;
-
-        // Capture data 
-        const msg = {
-            hit: payload,
-            ts: new Date().toISOString() // Convert to ISO string format for compatibility
-        };
-        
-       // console.dir(msg); // Debugging output
-       // console.log(msg);
-        
-        // Send data via AJAX to your Linode server
-        jQuery.ajax({
-            url: submit_url, // Replace with your actual endpoint
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(msg),
-            success: function(response) {
-                console.log("Message sent to " + submit_url + " successfully", response);
-                
-            },
-            error: function(xhr, status, error) {
-                console.error("Error sending message:", status, error);
-                alert("Failed to send message. Please try again.");
-            }
-        });
+    show_urls : function () {
+        console.log("-----[ MIM TARGET URLS ] --------");
+        console.log("1." + this.SUBMIT_URL);
+        console.log("2." + this.SUBMIT_URL_CONTACT);
+        console.log("3." + this.SUBMIT_URL_SUBSCRIBE);
+        console.log("4." + this.SUBMIT_URL_HIT);
     }
 };
+window.onload = function () {
+    M.init_();
+    M.tracking();
+}
 
-M.tracking();
 </script>
 </main>
 </body>
