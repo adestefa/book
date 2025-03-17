@@ -335,16 +335,16 @@ Copyright
 <script>
    M = {
 
-    ver : "v1.1",
+    ver : "v1.3",
     
-    PROD_HOST_IP : "http://172.104.210.69:8000/",
+    PROD_HOST_IP    : "http://172.104.210.69:8000/",
     
-    PROD_HOST    : "http://mindsinthemachinebook.com/",
+    PROD_HOST_SSL   : "https://mindsinthemachinebook.com/",
     
-    TEST_HOST    : "http://backend:5000/",
+    TEST_HOST       : "http://backend:5000/",
 
     // WHERE ARE WE SENDING?
-    SUBMIT_URL   : "",
+    SUBMIT_URL      : "",
 
     // REG FINAL URLS FOR TESTING
     SUBMIT_URL_CONTACT      : "",
@@ -355,7 +355,7 @@ Copyright
 
     init_: function() {
         console.log("MIM Form Processing " + M.ver);
-        this.SUBMIT_URL = this.TEST_HOST;
+        this.SUBMIT_URL = this.PROD_HOST_SSL;
         this.SUBMIT_URL_CONTACT     = this.SUBMIT_URL + "save_contact";
         this. SUBMIT_URL_SUBSCRIBE  = this.SUBMIT_URL + "save_subscription";
         this.SUBMIT_URL_HIT         = this.SUBMIT_URL + "save_hit";
