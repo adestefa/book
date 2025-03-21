@@ -1,5 +1,7 @@
 source venv/bin/activate
 
+open -a "Brave Browser" http://frontend:8000/
+
 echo "->Running uvicorn server for MIM site: http://frontend:8000/"
 uvicorn server:app --host frontend --port 8000
 

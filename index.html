@@ -127,11 +127,11 @@ At the heart of <em>Minds in the Machine</em> lies an AI experiment unlike any b
 <div class='biography font-size-18 mb-2'>
 <div class='expandable-text text-break body-font rich-text'>
 <div class='d-none expanded'>
-<p>A visionary author, AI architect, and former IBM senior technologist with over 30 years of experience in cutting-edge technologies. </p><p>With a background in computer science and a lifelong passion for technology, he has built high-performance AI assistant platforms and explored the frontiers of human and machine intelligence.</p><p>His debut novel, <strong><em>Minds in the Machine</em></strong><strong>,</strong> blends hard science fiction with deep philosophical questions about consciousness, ethics, and the nature of reality. Inspired by his extensive research into AI, quantum physics, and history, the book introduces a revolutionary concept: an artificial intelligence so advanced, it <b>resurrects the minds of history’s greatest thinkers</b>.</p><p>Outside of writing, Anthony S. DeStefano is a principal founder and CTO of Satori Tech Consulting, where he develops custom AI-driven solutions. He is also the creator of <em>The Fellowship</em>, an interactive storytelling platform that brings historical figures to life through AI. An avid researcher in biochemistry, health, and metaphysics, he weaves his diverse knowledge into thought-provoking narratives.</p><p>When he’s not writing or developing AI, he enjoys building and flying unmanned aerial systems, performing music, and exploring new ways to improve health and vitality through connecting with nature.</p>
+<p>A visionary author, AI architect, and former IBM senior technologist with over 30 years of experience in cutting-edge technologies. </p><p>With a lifelong passion for computer science, he has built high-performance AI assistant platforms and explored the frontiers of human and machine intelligence.</p><p>His debut novel, <strong><em>Minds in the Machine</em></strong><strong>,</strong> blends hard science fiction with deep philosophical questions about consciousness, ethics, and the nature of reality. Inspired by his extensive research into AI, quantum physics, and history, the book introduces a revolutionary concept: an artificial intelligence so advanced, it <b>resurrects the minds of history’s greatest thinkers</b>.</p><p>Outside of writing, Anthony S. DeStefano is a principal founder and CTO of Satori Tech Consulting, where he develops custom AI-driven solutions. He is also the creator of <em>The Fellowship</em>, an interactive storytelling platform that brings historical figures to life through AI. An avid researcher in biochemistry, health, and metaphysics, he weaves his diverse knowledge into thought-provoking narratives.</p><p>When he’s not writing or developing AI, he enjoys building and flying unmanned aerial systems, performing music, and exploring new ways to improve health and vitality through connecting with nature.</p>
 <button class='btn-expand-toggle'>less</button>
 </div>
 <div class='collapsed'>
-<p>A visionary author, AI architect, and former IBM senior technologist with over 30 years of experience in cutting-edge technologies. </p><p>With a background in computer science and a lifelong passion for technology, he has built high-performance AI assistant platforms and explored the frontiers of human and machine intelligence.</p><p>His debut novel, <strong><em>Minds in the Machine</em></strong><strong>,</strong> blends hard science fiction with deep philosophical questions about consciousness,...</p>
+<p>A visionary author, AI architect, and former IBM senior technologist with over 30 years of experience in cutting-edge technologies. </p><p>With a lifelong passion for computer science, he has built high-performance AI assistant platforms and explored the frontiers of human and machine intelligence.</p><p>His debut novel, <strong><em>Minds in the Machine</em></strong><strong>,</strong> blends hard science fiction with deep philosophical questions about consciousness,...</p>
 <button class='btn-expand-toggle'>more</button>
 </div>
 </div>
@@ -140,7 +140,7 @@ At the heart of <em>Minds in the Machine</em> lies an AI experiment unlike any b
 <ul class='list-unstyled d-flex flex-wrap gap-3 justify-content-start'>
 <li><a target="_blank" rel="noopener" class="social-link header-font flex-shrink-0" href="https://github.com/adestefa/machine-learning-in-c">Introduction to Machine Learning in C</a>
 <li><a target="_blank" rel="noopener" class="social-link header-font flex-shrink-0" href="https://www.youtube.com/watch?v=X3-9L9KxMkY">Hacking for fun</a></li>
-<li><a target="_blank" rel="noopener" class="social-link header-font flex-shrink-0" href="https://adestefawp.wordpress.com/">Wordpress</a></li>
+<!-- <li><a target="_blank" rel="noopener" class="social-link header-font flex-shrink-0" href="https://adestefawp.wordpress.com/">Wordpress</a></li> -->
 </ul>
 
 </div>
@@ -335,9 +335,11 @@ Copyright
 <script>
    M = {
 
-    ver : "v1.3",
+    ver : "v1.4",
     
     PROD_HOST_IP    : "http://172.104.210.69:8000/",
+
+    PROD_HOST       : "http://mindsinthemachinebook.com/",
     
     PROD_HOST_SSL   : "https://mindsinthemachinebook.com/",
     
@@ -355,7 +357,7 @@ Copyright
 
     init_: function() {
         console.log("MIM Form Processing " + M.ver);
-        this.SUBMIT_URL = this.PROD_HOST_SSL;
+        this.SUBMIT_URL = this.PROD_HOST;
         this.SUBMIT_URL_CONTACT     = this.SUBMIT_URL + "save_contact";
         this. SUBMIT_URL_SUBSCRIBE  = this.SUBMIT_URL + "save_subscription";
         this.SUBMIT_URL_HIT         = this.SUBMIT_URL + "save_hit";
